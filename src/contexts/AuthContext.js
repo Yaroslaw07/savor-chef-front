@@ -1,12 +1,17 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const AuthContext = createContext();
 
+export default AuthContext;
 
 //auth-token
 //username
-export const AuthContextProvider = ({children}) => {
+export function AuthContextProvider ({children}) {
+
+    const navigate = useNavigate();
+
     const [authState,setAuthState] = useState({
         isAuthenticated: false,
         token: null,
@@ -49,7 +54,9 @@ export const AuthContextProvider = ({children}) => {
                 token: data.token,
                 user: data.user
             })
+            navigate('/');
         } else {
+            alert("Something went wrong!:(");
             // add errors handling
         }
     };
@@ -72,7 +79,9 @@ export const AuthContextProvider = ({children}) => {
               token: data.token,
               user: data.user,
             });
+            navigate('/');
         } else {
+            alert("Something went wrong!");
             //error handling
         }
     };
@@ -93,4 +102,4 @@ export const AuthContextProvider = ({children}) => {
 
 }
 
-export default AuthContext;
+

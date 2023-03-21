@@ -4,7 +4,7 @@ import AuthContext from "../contexts/AuthContext";
 
 
 function Login({setToken}) {
-    const { authCtx } = useContext(AuthContext)
+    const authCtx = useContext(AuthContext)
     const [mail, setMail] = useState();
     const [password, setPassword] = useState();
 
