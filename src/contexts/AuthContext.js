@@ -14,41 +14,36 @@ export function AuthContextProvider ({children}) {
 
     const [authState,setAuthState] = useState({
         isAuthenticated: false,
-        token: null,
-        userName: null
+        accessToken: null,
+        refreshToken: null
     })
 
-    const context = {
-        state: authState,
-        login: login,
-        signUp: signUp,
-        logout: logout
-    }
+    
 
     useEffect(() => {
         const token = localStorage.getItem('auth-token');
         if (token) {
             setAuthState({
-                isAuthenticated: true,
-                token: token,
-                user: JSON.parse(localStorage.getItem('username'))
-            })
+              isAuthenticated: true,
+              accessToken: JSON.parse(localStorage.getItem("accessToken")),
+              refreshToken: JSON.parse(localStorage.getItem("refreshToken")),
+            });
         }
     }, [])
 
-    async function login(email,password){
-        const response = await fetch('my-api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({email,password})
-        })
+    async function signIn(email,password){
+        const response = await fetch("https://localhost:7083/signin", {
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem('auth-token',data.token);
-            localStorage.setItem('username',JSON.stringify(data.user))
+            localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
+            localStorage.setItem("refreshToken", JSON.stringify(data.refreshToken));
             setAuthState({
                 isAuthenticated:true,
                 token: data.token,
@@ -62,18 +57,18 @@ export function AuthContextProvider ({children}) {
     };
 
     async function signUp(username,email,password) {
-        const response = await fetch('my-api/signup',{
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({username,email,password})
+        const response = await fetch(" https://localhost:7083/signup", {
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
         });
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem("auth-token", data.token);
-            localStorage.setItem("username", JSON.stringify(data.user));
+            localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
+            localStorage.setItem("refreshToken", JSON.stringify(data.refreshToken));
             setAuthState({
               isAuthenticated: true,
               token: data.token,
@@ -87,13 +82,20 @@ export function AuthContextProvider ({children}) {
     };
 
     function logout() {
-        localStorage.removeItem('auth-token');
-        localStorage.removeItem('username');
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         setAuthState({
-            isAuthenticated:false,
-            token: null,
-            user: null
+          isAuthenticated: false,
+          accessToken: null,
+          refreshToken: null,
         });
+    };
+
+    const context = {
+      state: authState,
+      signIn: signIn,
+      signUp: signUp,
+      logout: logout,
     };
 
     return <AuthContext.Provider value={context}>

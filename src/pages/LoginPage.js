@@ -1,20 +1,23 @@
 import { useContext, useState } from "react";
 import { json } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 
-function Login({setToken}) {
+
+function SignIn({setToken}) {
     const authCtx = useContext(AuthContext)
     const [mail, setMail] = useState();
     const [password, setPassword] = useState();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await authCtx.login(mail,password);
+        await authCtx.signUp(mail, password);
     }
 
     return (
-      <div className="login-wrapper">
+      <div>
         <h1>Please Log In</h1>
         <form onSubmit={handleSubmit}>
           <label>
@@ -33,4 +36,4 @@ function Login({setToken}) {
     );
 }
 
-export default Login;
+export default SignIn;

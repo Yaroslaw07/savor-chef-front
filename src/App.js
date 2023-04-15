@@ -1,29 +1,30 @@
-import { BrowserRouter, Route, Routes, IndexRoute } from "react-router-dom";
-import Layout from "./layout/Layout";
-import Login from "./pages/Login";
-import AllReceipts from "./pages/AllReceipts";
-import { useState } from "react";
-import SignUp from "./pages/SignUp";
-import AuthContext, { AuthContextProvider } from "./contexts/AuthContext";
+import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
+import Layout from "./component/layout/Layout";
+import Login from "./pages/LoginPage";
+import AllReceipts from "./pages/AllReceiptsPage";
+import SignUp from "./pages/SignUpPage";
+import { AuthContextProvider } from "./contexts/AuthContext";
+import SignIn from "./pages/LoginPage";
 
 
 function App(){
   return (
-    <AuthContextProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthContextProvider>
         <Routes>
           <Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signin" element={<SignIn />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
           </Route>
           <Route element={<Layout />}>
             <Route path="/" element={<AllReceipts />}></Route>
             <Route path="/search"></Route>
             <Route path="/shelf" element></Route>
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
   );
 }
 
