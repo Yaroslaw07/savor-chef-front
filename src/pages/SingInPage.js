@@ -13,12 +13,12 @@ function SignIn({setToken}) {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await authCtx.signUp(mail, password);
+        await authCtx.signIn(mail, password);
     }
 
     return (
       <div>
-        <h1>Please Log In</h1>
+        <h1>Please Sign In</h1>
         <form onSubmit={handleSubmit}>
           <label>
             <p>Email</p>

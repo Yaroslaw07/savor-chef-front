@@ -1,10 +1,9 @@
 import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
 import Layout from "./component/layout/Layout";
-import Login from "./pages/LoginPage";
+import SignIn from "./pages/SingInPage";
 import AllReceipts from "./pages/AllReceiptsPage";
 import SignUp from "./pages/SignUpPage";
 import { AuthContextProvider } from "./contexts/AuthContext";
-import SignIn from "./pages/LoginPage";
 
 
 function App(){

@@ -32,13 +32,18 @@ export function AuthContextProvider ({children}) {
     }, [])
 
     async function signIn(email,password){
+
+        console.log(email, password);
+        
         const response = await fetch("https://localhost:7083/signin", {
           method: "POST",
           headers: {
-            "content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
           },
           body: JSON.stringify({ email, password }),
         });
+
+        
 
         if (response.ok) {
             const data = await response.json();
@@ -57,10 +62,10 @@ export function AuthContextProvider ({children}) {
     };
 
     async function signUp(username,email,password) {
-        const response = await fetch(" https://localhost:7083/signup", {
+        const response = await fetch("https://localhost:7083/signup", {
           method: "POST",
           headers: {
-            "content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
           },
           body: JSON.stringify({ email, password }),
         });

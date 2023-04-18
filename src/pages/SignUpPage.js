@@ -19,7 +19,10 @@ function SignUp() {
       <form onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
-          <input type="text" onChange={(e) => setUsername(e.target.value)}></input>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+          ></input>
         </label>
         <label>
           <p>Email</p>
@@ -32,6 +35,9 @@ function SignUp() {
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </label>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
         <div></div>
       </form>
     );
