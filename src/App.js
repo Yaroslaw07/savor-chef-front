@@ -1,9 +1,10 @@
 import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
-import Layout from "./component/layout/Layout";
+import MainLayout from "./component/mainLayout/MainLayout";
 import SignIn from "./pages/SingInPage";
 import AllReceipts from "./pages/AllReceiptsPage";
 import SignUp from "./pages/SignUpPage";
 import { AuthContextProvider } from "./contexts/AuthContext";
+import AuthLayout from "./component/authLayout/AuthLayout";
 
 
 function App(){
@@ -11,11 +12,11 @@ function App(){
     <BrowserRouter>
       <AuthContextProvider>
         <Routes>
-          <Route>
+          <Route element = {<AuthLayout/>}>
             <Route path="/signin" element={<SignIn />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
           </Route>
-          <Route element={<Layout />}>
+          <Route element={<MainLayout />}>
             <Route path="/" element={<AllReceipts />}></Route>
             <Route path="/search"></Route>
             <Route path="/shelf" element></Route>

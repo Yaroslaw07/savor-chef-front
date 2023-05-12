@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const AuthContext = createContext();
@@ -18,22 +18,54 @@ export function AuthContextProvider ({children}) {
         refreshToken: null
     })
 
-    
-
     useEffect(() => {
-        const token = localStorage.getItem('auth-token');
-        if (token) {
-            setAuthState({
-              isAuthenticated: true,
-              accessToken: JSON.parse(localStorage.getItem("accessToken")),
-              refreshToken: JSON.parse(localStorage.getItem("refreshToken")),
-            });
+
+        if (authState.accessToken != null && authState.refreshToken != null) {
+          return;
+        }
+        
+        if (authState.refreshToken != null) {
+          refresh(authState.accessToken)
+        }
+
+        const refreshToken = localStorage.getItem("refreshToken");
+        
+        if (refreshToken) {
+          refresh(refreshToken)
+        } else {
+
+          navigate("/signin");
         }
     }, [])
 
-    async function signIn(email,password){
+    async function refresh(refreshToken) {
+      const response = await fetch("https://localhost:7083/refresh", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({ refreshToken }),
+      });
 
-        console.log(email, password);
+      if (response.ok) {
+
+          const data = await response.json();
+          localStorage.setItem("refreshToken",JSON.stringify(data.refreshToken));
+          setAuthState({
+            isAuthenticated: true,
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken
+          });
+
+      } else {
+        
+        logout()
+        navigate('/signin')
+        // error
+      }
+    }
+
+    async function signIn(email,password){
         
         const response = await fetch("https://localhost:7083/signin", {
           method: "POST",
@@ -47,13 +79,12 @@ export function AuthContextProvider ({children}) {
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
             localStorage.setItem("refreshToken", JSON.stringify(data.refreshToken));
             setAuthState({
-                isAuthenticated:true,
-                token: data.token,
-                user: data.user
-            })
+              isAuthenticated: true,
+              accessToken: data.accessToken,
+              refreshToken: data.refreshToken,
+            });
             navigate('/');
         } else {
             alert("Something went wrong!:(");
@@ -72,12 +103,11 @@ export function AuthContextProvider ({children}) {
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
             localStorage.setItem("refreshToken", JSON.stringify(data.refreshToken));
             setAuthState({
               isAuthenticated: true,
-              token: data.token,
-              user: data.user,
+              accessToken: data.accessToken,
+              refreshToken: data.refreshToken,
             });
             navigate('/');
         } else {
@@ -87,7 +117,6 @@ export function AuthContextProvider ({children}) {
     };
 
     function logout() {
-        localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         setAuthState({
           isAuthenticated: false,
