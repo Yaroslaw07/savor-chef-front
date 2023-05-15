@@ -9,7 +9,13 @@ function SignIn({setToken}) {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        await authCtx.signIn(mail, password);
+
+        const payload = {
+          email: mail,
+          password: password
+        }
+
+        await authCtx.signIn(payload);
     }
 
     return (

@@ -1,5 +1,10 @@
+import { useContext, useState } from "react";
+import AuthContext from "../contexts/AuthContext";
+
 function AllReceipts() {
-    return <div>All Receipts</div>
+  const authCtx = useContext(AuthContext);
+
+  return <div>All Receipts</div>;
 }
 
 export default AllReceipts;

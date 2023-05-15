@@ -11,7 +11,13 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await authCtx.signUp(username, mail, password);
+
+    const payload = {
+      email: mail,
+      password: password
+    }
+
+    await authCtx.signUp(payload);
   };
 
   return (

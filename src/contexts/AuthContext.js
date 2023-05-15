@@ -1,6 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
+
+const apiPath = "https://localhost:7083/";
 
 const AuthContext = createContext();
 
@@ -12,121 +16,58 @@ export function AuthContextProvider ({children}) {
 
     const navigate = useNavigate();
 
-    const [authState,setAuthState] = useState({
-        isAuthenticated: false,
-        accessToken: null,
-        refreshToken: null
+    const [user,setUser] = useState(()=>{
+      if (localStorage.getItem('tokens')) {
+        let tokens = JSON.parse(localStorage.getItem("tokens"))
+        console.log(tokens)
+        return jwt_decode(tokens.accessToken)
+      }
+
+      return null
     })
 
-    useEffect(() => {
-
-        if (authState.accessToken != null && authState.refreshToken != null) {
-          return;
-        }
+    async function signIn(payload){
         
-        if (authState.refreshToken != null) {
-          refresh(authState.accessToken)
-        }
+        await axios.post(
+          apiPath + "signin",
+          payload,
+          { 
+            headers: {'Content-Type': 'application/json'}
+          }
+        ).then(response => {
 
-        const refreshToken = localStorage.getItem("refreshToken");
-        
-        if (refreshToken) {
-          refresh(refreshToken)
-        } else {
+            const data = response.data;
+            console.log(data);
+            localStorage.setItem("tokens",JSON.stringify(data))
+          
+            
+            setUser(data.accessToken)
 
-          navigate("/signin");
-        }
-    }, [])
-
-    async function refresh(refreshToken) {
-      const response = await fetch("https://localhost:7083/refresh", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify({ refreshToken }),
-      });
-
-      if (response.ok) {
-
-          const data = await response.json();
-          localStorage.setItem("refreshToken",JSON.stringify(data.refreshToken));
-          setAuthState({
-            isAuthenticated: true,
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken
-          });
-
-      } else {
-        
-        logout()
-        navigate('/signin')
-        // error
-      }
-    }
-
-    async function signIn(email,password){
-        
-        const response = await fetch("https://localhost:7083/signin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        
-
-        if (response.ok) {
-            const data = await response.json();
-            localStorage.setItem("refreshToken", JSON.stringify(data.refreshToken));
-            setAuthState({
-              isAuthenticated: true,
-              accessToken: data.accessToken,
-              refreshToken: data.refreshToken,
-            });
-            navigate('/');
-        } else {
-            alert("Something went wrong!:(");
-            // add errors handling
-        }
+            navigate('/')
+        }).catch(error => {
+          
+          console.log(error);
+        })
     };
 
-    async function signUp(username,email,password) {
-        const response = await fetch("https://localhost:7083/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            localStorage.setItem("refreshToken", JSON.stringify(data.refreshToken));
-            setAuthState({
-              isAuthenticated: true,
-              accessToken: data.accessToken,
-              refreshToken: data.refreshToken,
-            });
-            navigate('/');
-        } else {
-            alert("Something went wrong!");
-            //error handling
-        }
+    async function signUp(payload) {
+        axios.post(
+          apiPath + "signup",
+          payload,
+          { 
+            headers: {'Content-Type': 'application/json'}
+          }
+          ).then(response =>  navigate('/signin')).catch(error => console.log(error.response))
     };
 
-    function logout() {
-        localStorage.removeItem("refreshToken");
-        setAuthState({
-          isAuthenticated: false,
-          accessToken: null,
-          refreshToken: null,
-        });
+    async function logout() {
+        localStorage.removeItem("tokens");
+        setUser(null)
+        navigate('/')
     };
 
     const context = {
-      state: authState,
+      user: user,
       signIn: signIn,
       signUp: signUp,
       logout: logout,
