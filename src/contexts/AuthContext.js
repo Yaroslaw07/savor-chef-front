@@ -2,9 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { apiPath } from "../App";
 
-
-const apiPath = "https://localhost:7083/";
 
 const AuthContext = createContext();
 
@@ -39,9 +38,10 @@ export function AuthContextProvider ({children}) {
             const data = response.data;
             console.log(data);
             localStorage.setItem("tokens",JSON.stringify(data))
-          
             
             setUser(data.accessToken)
+
+            console.log(user)
 
             navigate('/')
         }).catch(error => {

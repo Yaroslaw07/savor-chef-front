@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUpPage";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import AuthLayout from "./component/authLayout/AuthLayout";
 
+export const apiPath = "https://localhost:7083/";
 
 function App(){
   return (
