@@ -5,8 +5,9 @@ import AllReceipts from "./pages/AllReceiptsPage";
 import SignUp from "./pages/SignUpPage";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import AuthLayout from "./component/authLayout/AuthLayout";
+import ShelfPage from "./pages/ShelfPage";
 
-export const apiPath = "https://localhost:7083/";
+
 
 function App(){
   return (
@@ -20,7 +21,7 @@ function App(){
           <Route element={<MainLayout />}>
             <Route path="/" element={<AllReceipts />}></Route>
             <Route path="/search"></Route>
-            <Route path="/shelf" element></Route>
+            <Route path="/shelf" element={<ShelfPage />}></Route>
             <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
