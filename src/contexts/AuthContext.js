@@ -2,8 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import { apiPath } from "../index.js";
-
+import api from "../api-common";
 
 const AuthContext = createContext();
 
@@ -27,12 +26,9 @@ export function AuthContextProvider ({children}) {
 
     async function signIn(payload){
         
-        await axios.post(
-          apiPath + "signin",
-          payload,
-          { 
-            headers: {'Content-Type': 'application/json'}
-          }
+        await api.post(
+          "/signin",
+          payload
         ).then(response => {
 
             const data = response.data;
@@ -50,12 +46,8 @@ export function AuthContextProvider ({children}) {
     };
 
     async function signUp(payload) {
-        axios.post(
-          apiPath + "signup",
-          payload,
-          { 
-            headers: {'Content-Type': 'application/json'}
-          }
+        api.post(
+          "/signup",
           ).then(response =>  navigate('/signin')).catch(error => console.log(error.response))
           .catch(_ => {
             throw new Error("Wrong data");

@@ -1,12 +1,10 @@
-import axios from "axios";
-import { apiPath } from "../../App";
+import api from "../../api-common";
 
-const jwtInterceptor = axios.create({});
+const jwtInterceptor = api.create({});
 
 jwtInterceptor.interceptors.request.use((config) => {
     let data = JSON.parse(localStorage.getItem("tokens"));
     config.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
-    config.headers.common["Content-Type"] = "application/json";
     return config
 })
 
@@ -20,14 +18,14 @@ jwtInterceptor.interceptors.response.use(
             const data = JSON.parse(localStorage.getItem('tokens'));
             
 
-            await axios.post(apiPath + "refresh",data.refreshToken,
-                                                { headers: {'Content-Type': 'application/json',
+            await api.post("/refresh",data.refreshToken,
+                                                { headers: {
                                                             'Authorization': `Bearer ${data.accessToken}`}
             }).then(response => {
                 localStorage.setItem("tokens",JSON.stringify(response.data))
 
                 error.config.headers["Authorization"] = `Bearer ${response.data.accessToken}`;
-                return axios(error.config);
+                return api(error.config);
 
             }).catch(error => {
                 return Promise.reject(error);
