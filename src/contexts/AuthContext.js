@@ -35,7 +35,7 @@ export function AuthContextProvider ({children}) {
             console.log(data);
             localStorage.setItem("tokens",JSON.stringify(data));
             
-            setUser(data.accessToken);
+            setUser(jwt_decode(data.accessToken));
 
             console.log(user);
 
