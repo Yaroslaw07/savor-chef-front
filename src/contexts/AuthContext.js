@@ -37,17 +37,16 @@ export function AuthContextProvider ({children}) {
 
             const data = response.data;
             console.log(data);
-            localStorage.setItem("tokens",JSON.stringify(data))
+            localStorage.setItem("tokens",JSON.stringify(data));
             
-            setUser(data.accessToken)
+            setUser(data.accessToken);
 
-            console.log(user)
+            console.log(user);
 
             navigate('/')
-        }).catch(error => {
-          
-          console.log(error);
-        })
+        }).catch(_ => {
+            throw new Error("Wrong data")
+        });
     };
 
     async function signUp(payload) {
@@ -58,6 +57,9 @@ export function AuthContextProvider ({children}) {
             headers: {'Content-Type': 'application/json'}
           }
           ).then(response =>  navigate('/signin')).catch(error => console.log(error.response))
+          .catch(_ => {
+            throw new Error("Wrong data");
+          })
     };
 
     async function logout() {
