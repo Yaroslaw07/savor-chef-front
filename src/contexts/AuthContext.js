@@ -28,7 +28,7 @@ export function AuthContextProvider ({children}) {
         
         await api.post(
           "/signin",
-          payload
+          payload,
         ).then(response => {
 
             const data = response.data;
