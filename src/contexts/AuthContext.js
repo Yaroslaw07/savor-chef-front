@@ -1,7 +1,6 @@
-import { createContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
 import api from "../api-common";
 
 const AuthContext = createContext();
@@ -47,7 +46,7 @@ export function AuthContextProvider ({children}) {
 
     async function signUp(payload) {
         api.post(
-          "/signup",
+          "/signup",payload
           ).then(response =>  navigate('/signin')).catch(error => console.log(error.response))
           .catch(_ => {
             throw new Error("Wrong data");

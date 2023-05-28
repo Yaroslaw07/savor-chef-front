@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 function InactivePath(props) {
 
-    console.log(props);
   return (
 
     <Link

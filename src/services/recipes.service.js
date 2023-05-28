@@ -1,22 +1,26 @@
 import api from "../api-common";
 
+const recipeApi = api.create({
+  baseURL: api.defaults.baseURL + "/api",
+})
+
 class RecipeDataService {
 
-    create(data) {
-      return api.post("Recipe/Create", data);
+    async create(data) {
+      return await recipeApi.post("/Recipe/Create", data);
     }
 
-    get(id) {
-      return api.get("/Recipe/Get", id);
+    async get(id) {
+      return await recipeApi.get("/Recipe/Get", id);
     }
 
-    delete(id) {
-        return api.delete("/Recipe/Delete",id)
+    async delete(id) {
+        return await recipeApi.delete("/Recipe/Delete", id);
     }
 
-    getAll() {
-      return api.get("/Product/GetAll");
+    async getAll(user) {      
+      return await recipeApi.get("/Recipe/GetAll");
     }
 }
 
-export default RecipeDataService;
+export default new RecipeDataService();
