@@ -8,8 +8,8 @@ function ReceiptItem(props) {
   return (
     <div
       className={` ${
-        isFocused ? "bg-gray-100" : ""
-      } w-60 h-36   bg-white  border-b-4 border-blue-300 rounded-lg shadow dark: dark:bg-gray-800 dark:border-gray-700`}
+        isFocused ? "bg-gray-100" : "bg-white"
+      } w-60 h-36    border-b-4 border-blue-300 rounded-lg shadow dark: dark:bg-gray-800 dark:border-gray-700`}
       onMouseEnter={() => setFocus(true)}
       onMouseLeave={() => setFocus(false)}
     >

@@ -4,7 +4,7 @@ import NavBar from "./NavBar/NavBar";
 
 function MainLayout(props){
     return (
-      <div className="flex flex-col h-screen">
+      <div className="flex min-w-300 flex-col h-screen">
         <NavBar></NavBar>
         <main className="flex-1 bg-gradient-to-b from-white to-blue-100">
           <Outlet />
