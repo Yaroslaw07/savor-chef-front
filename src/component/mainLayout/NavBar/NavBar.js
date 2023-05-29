@@ -16,7 +16,7 @@ function NavBar() {
   // p-0 font-medium  bg-gray-50 flex-col space-x-8 mt-0 border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700
   return (
     <nav className="sticky bg-white dark:bg-gray-900 w-full z-20 top-0 left-0 border-b-4 rounded-b-lg border-blue-300  dark:border-gray-600">
-      <div className="flex flex-wrap flex-col sm:flex-row gap-2 sm:gap-0 items-center justify-between p-4 pl-6">
+      <div className="flex flex-wrap flex-col sm:flex-row  sm:gap-0 items-center justify-between p-4 pl-6">
         <Link
           to="/"
           className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
