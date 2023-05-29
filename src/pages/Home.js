@@ -25,7 +25,9 @@ function Home() {
     return <p>Loading</p>;
   }
 
-  return <ReceiptList receipts={receipts} />;
+  return (
+      <ReceiptList  receipts={receipts} />
+  );
 }
 
 const recipes = [

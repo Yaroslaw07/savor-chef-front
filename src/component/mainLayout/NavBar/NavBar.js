@@ -15,7 +15,7 @@ function NavBar() {
 
 
   return (
-    <nav className="bg-white dark:bg-gray-900 w-full z-20 top-0 left-0 border-b-4 border-blue-300  dark:border-gray-600">
+    <nav className="sticky bg-white dark:bg-gray-900 w-full z-20 top-0 left-0 border-b-4 rounded-b-lg border-blue-300  dark:border-gray-600">
       <div className="flex flex-wrap items-center justify-between p-4 pl-6">
         <Link
           to="/"
