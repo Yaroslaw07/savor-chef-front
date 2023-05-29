@@ -4,11 +4,26 @@ import ReceiptList from "../component/receipts/ReceiptList";
 import api from "../api-common";
 import recipeDataService from "../services/recipes.service";
 
+export class SideBarState {
+  static Hidden = new SideBarState("Hidden");
+  static ShowReceipt = new SideBarState("ShowReceipt");
+  static AddReceipt = new SideBarState("AddReceipt");
+
+  constructor(state) {
+    this.state = state;
+  }
+
+  toString() {
+    return `State:${this.state}`;
+  }
+};
+
 function Home() {
   const [receipts, setReceipts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const authCtx = useContext(AuthContext)
+
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     /*recipeDataService
@@ -17,17 +32,24 @@ function Home() {
         setReceipts(response.data);
       })
       .finally(setLoading(false));*/
-      setReceipts(recipes);
-      setLoading(false);
+    setReceipts(recipes);
+    setLoading(false);
   }, []);
 
   if (loading) {
     return <p>Loading</p>;
   }
 
+  if (receipts.length === 0) {
+    return <p>No receipts</p>;
+  }
+
+
+
   return (
     <div>
       <ReceiptList receipts={receipts} />
+
       <button className="absolute right-4 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
         +
       </button>
@@ -89,7 +111,4 @@ const recipes = [
   },
 ];
 
-
 export default Home;
-
-
