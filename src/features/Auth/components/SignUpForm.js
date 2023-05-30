@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
-function SignUp() {
+function SignUpForm() {
   const authCtx = useContext(AuthContext);
 
   const [username, setUsername] = useState();
@@ -97,4 +97,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignUpForm;

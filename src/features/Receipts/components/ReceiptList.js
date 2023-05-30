@@ -9,7 +9,7 @@ function ReceiptList({ receipts, showRecipe }) {
         <ReceiptItem
           key={receipt.id}
           receipt={receipt}
-          showRecipe={showRecipe}
+          clickHandle={showRecipe}
         ></ReceiptItem>
       ))}
     </ul>

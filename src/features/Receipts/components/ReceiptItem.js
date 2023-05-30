@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ReceiptItem({ receipt, showRecipe }) {
+function ReceiptItem({ receipt, clickHandle }) {
   const [isFocused, setFocus] = useState(false);
 
   return (
@@ -14,7 +14,7 @@ function ReceiptItem({ receipt, showRecipe }) {
       >
         <div>
           <h3
-            onClick={() => showRecipe(receipt.id)}
+            onClick={() => clickHandle(receipt.id)}
             className={`${
               isFocused ? "bg-blue-800" : "bg-blue-700"
             } mb-1 h-20 p-4 rounded-t-lg text-white   hover:bg-blue-800 text-xl font-bold dark:text-white`}

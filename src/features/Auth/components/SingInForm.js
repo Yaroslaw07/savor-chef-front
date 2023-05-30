@@ -3,7 +3,7 @@ import AuthContext from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 
-function SignIn({setToken}) {
+function SignInForm({setToken}) {
     const authCtx = useContext(AuthContext)
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -80,4 +80,4 @@ function SignIn({setToken}) {
     );
 }
 
-export default SignIn;
+export default SignInForm;

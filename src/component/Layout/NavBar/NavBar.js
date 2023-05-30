@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ActivePath from "./ActivePath";
 import InactivePath from "./InactivePath";
 import { useContext } from "react";
-import AuthContext from "../../../contexts/AuthContext";
+import AuthContext from "../../../features/Auth/contexts/AuthContext";
 
 const pages = [
   { title: "Home", path: "/" },

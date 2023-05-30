@@ -1,10 +1,9 @@
 import { useContext, useState, useEffect } from "react";
-import AuthContext from "../contexts/AuthContext";
-import ReceiptList from "../component/receipts/ReceiptList";
-import api from "../api-common";
-import recipeDataService from "../services/recipes.service";
-import FullReceipt from "../component/receipts/ReceiptFull";
-import NewReceiptForm from "../component/receipts/NewReceiptForm";
+import AuthContext from "../features/Auth/contexts/AuthContext";
+import ReceiptList from "../features/Receipts/components/ReceiptList";
+import recipeDataService from "../features/Receipts/services/recipes.service";
+import FullReceipt from "../features/Receipts/components/ReceiptFull";
+import NewReceiptForm from "../features/Receipts/components/NewReceiptForm";
 
 export class SideWindowState {
   static Hidden = new SideWindowState("Hidden");
