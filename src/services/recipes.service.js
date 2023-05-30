@@ -11,7 +11,7 @@ class RecipeDataService {
     }
 
     async get(id) {
-      return await recipeApi.get("/Recipe/Get", id);
+      return await recipeApi.get(`/Recipe/Get?id=${id}`);
     }
 
     async delete(id) {
