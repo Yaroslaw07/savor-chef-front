@@ -3,37 +3,135 @@ import AuthContext from "../contexts/AuthContext";
 import ReceiptList from "../component/receipts/ReceiptList";
 import api from "../api-common";
 import recipeDataService from "../services/recipes.service";
+import FullReceipt from "../component/receipts/ReceiptFull";
+import NewReceiptForm from "../component/receipts/NewReceiptForm";
+
+export class SideWindowState {
+  static Hidden = new SideWindowState("Hidden");
+  static Receipt = new SideWindowState("Receipt");
+  static AddReceipt = new SideWindowState("AddReceipt");
+
+  constructor(state) {
+    this.state = state;
+  }
+
+  toString() {
+    return `State:${this.state}`;
+  }
+}
 
 function Home() {
   const [receipts, setReceipts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const authCtx = useContext(AuthContext)
+  const [currSideBar, setSideBar] = useState(SideWindowState.Hidden);
+  const [currRecipe,setCurrReceipt] = useState(null);
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
-    /*recipeDataService
+    recipeDataService
       .getAll()
       .then((response) => {
         setReceipts(response.data);
       })
-      .finally(setLoading(false));*/
-      setReceipts(recipes);
-      setLoading(false);
+      .finally(setLoading(false));
   }, []);
+
+  const showRecipe = (receiptId) => {
+    recipeDataService.get(receiptId).then((response) => {
+      setCurrReceipt(response.data);
+      setSideBar(SideWindowState.Receipt);
+    });
+  };
+
+  const addRecipe = () => {
+    setCurrReceipt(null)
+    setSideBar(SideWindowState.AddReceipt)
+  }
+
+  const closeSideWindow = () => {
+    setCurrReceipt(null)
+    setSideBar(SideWindowState.Hidden);
+  }
 
   if (loading) {
     return <p>Loading</p>;
   }
 
-  return (
-    <div>
-      <ReceiptList receipts={receipts} />
-      <button className="absolute right-4 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-        +
-      </button>
-    </div>
-  );
+  if (receipts.length === 0) {
+    return <p>No receipts</p>;
+  }
+
+  switch (currSideBar) {
+    case SideWindowState.Hidden:
+      return (
+        <div className="pt-4 pb-4">
+          <ReceiptList receipts={receipts} showRecipe={showRecipe} />
+
+          <button 
+          onClick={addRecipe}
+          className="fixed right-5 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            +
+          </button>
+        </div>
+      );
+
+    case SideWindowState.Receipt:
+      return (
+        <div className="flex pt-4 pb-4">
+          <div className="hidden sm:w-1/2 sm:block">
+            <ReceiptList receipts={receipts} showRecipe={showRecipe} />
+          </div>
+          <div className="w-full sm:w-1/2">
+            <FullReceipt receipt={currRecipe}></FullReceipt>
+          </div>
+          <button
+            onClick={closeSideWindow}
+            className="fixed right-5 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            x
+          </button>
+        </div>
+      );
+
+    case SideWindowState.AddReceipt:
+      return (
+        <div className="flex pt-4 pb-4">
+          <div className="hidden sm:w-1/2 sm:block">
+            <ReceiptList receipts={receipts} showRecipe={showRecipe} />
+          </div>
+          <div className="w-full sm:w-1/2">
+            <NewReceiptForm></NewReceiptForm>
+          </div>
+          <button
+            onClick={closeSideWindow}
+            className="fixed right-5 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            x
+          </button>
+        </div>
+      );
+
+    default:
+      return <p>Error</p>;
+  }
 }
+
+
+export default Home;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const recipes = [
   {
@@ -88,8 +186,4 @@ const recipes = [
     dishCategory: "Main Dish",
   },
 ];
-
-
-export default Home;
-
 
