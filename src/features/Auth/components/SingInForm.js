@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import SubmitButton from "../../../component/ui/buttons/SubmitButton";
 
 
 function SignInForm({setToken}) {
@@ -60,21 +61,23 @@ function SignInForm({setToken}) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button
-            type="submit"
-            className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
-          >
-            Sign In
-          </button>
-          <p className="text-sm font-normal text-gray-500 ">
-            Don’t have an account yet?{" "}
-            <Link
-              to="/signup"
-              className="font-medium text-blue-600 hover:underline"
-            >
-              Sign up
-            </Link>
-          </p>
+
+          <div className="flex flex-col justify-center">
+
+            <SubmitButton
+              handleClick={handleSubmit}
+            >Sign In</SubmitButton>
+
+            <p className="text-sm py-2.5  font-normal text-gray-500 ">
+              Don’t have an account yet?{" "}
+              <Link
+                to="/signup"
+                className="font-medium text-blue-600 hover:underline"
+              >
+                Sign up
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     );

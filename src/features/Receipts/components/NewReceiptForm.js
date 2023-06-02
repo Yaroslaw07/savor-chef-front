@@ -1,5 +1,6 @@
-import { all } from "axios";
 import { useState } from "react";
+import SubmitButton from "../../../component/ui/buttons/SubmitButton";
+import CancelButton from "../../../component/ui/buttons/CancelButton";
 
 function NewReceiptForm({ onSubmit, onCancel }) {
   const [receipt, setReceipt] = useState({
@@ -41,14 +42,14 @@ function NewReceiptForm({ onSubmit, onCancel }) {
           <div>
             <label
               htmlFor="text"
-              name="Title"
+              name="Name"
               className="block mb-2 text-sm font-medium text-gray-900 md:text-lg "
             >
               Title:
             </label>
             <input
               type="text"
-              name="Title"
+              name="name"
               defaultValue={receipt.name}
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               placeholder="Best receipt of the world"
@@ -65,7 +66,7 @@ function NewReceiptForm({ onSubmit, onCancel }) {
             </label>
             <textarea
               type="text"
-              name="RecipeDescription"
+              name="recipeDescription"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               placeholder="your_email@domain.com"
               onChange={(e) => handleChange(e)}
@@ -81,7 +82,7 @@ function NewReceiptForm({ onSubmit, onCancel }) {
             </label>
             <textarea
               type="text"
-              name="PreparationInstructions"
+              name="preparationInstructions"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               placeholder="your_email@domain.com"
               onChange={(e) => handleChange(e)}
@@ -91,7 +92,7 @@ function NewReceiptForm({ onSubmit, onCancel }) {
           <div>
             <label
               htmlFor="text"
-              name="DishCategory"
+              name="dishCategory"
               className="block mb-2 text-sm font-medium text-gray-900 md:text-lg"
             >
               PreparationTime:
@@ -123,15 +124,15 @@ function NewReceiptForm({ onSubmit, onCancel }) {
 
             <div>
               <label
-                htmlFor="password"
+                htmlFor="text"
                 className="block mb-2 text-sm font-medium text-gray-900 md:text-lg"
               >
                 DishCategory
               </label>
               <input
-                type="password"
-                name="DishCategory"
-                placeholder="123456"
+                type="text"
+                name="dishCategory"
+                placeholder="Breakfast"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 onChange={(e) => handleChange(e)}
               />
@@ -139,16 +140,8 @@ function NewReceiptForm({ onSubmit, onCancel }) {
           </div>
 
           <div className="flex flex-row justify-between">
-            <button type="button" onClick={onCancel}>
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={FormSubmit}
-              className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center "
-            >
-              Create
-            </button>
+            <CancelButton clickHandle={onCancel}>Cancel</CancelButton>
+            <SubmitButton clickHandle={FormSubmit}>Create</SubmitButton>
           </div>
         </form>
       </div>

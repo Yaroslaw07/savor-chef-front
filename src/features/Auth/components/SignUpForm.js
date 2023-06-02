@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import SubmitButton from "../../../component/ui/buttons/SubmitButton";
 
 function SignUpForm() {
   const authCtx = useContext(AuthContext);
@@ -15,13 +16,13 @@ function SignUpForm() {
     const payload = {
       username: username,
       email: email,
-      password: password
-    }
+      password: password,
+    };
 
     try {
-      await authCtx.signUp(payload)
-    } catch(error) {
-      alert(error)
+      await authCtx.signUp(payload);
+    } catch (error) {
+      alert(error);
     }
   };
 
@@ -30,7 +31,7 @@ function SignUpForm() {
       <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
         Join Us
       </h1>
-      <form className="space-y-4 md:space-y-6 pt-6" onSubmit={handleSubmit}>
+      <form className="space-y-4 md:space-y-6 pt-6">
         <div>
           <label
             htmlFor="username"
@@ -78,22 +79,20 @@ function SignUpForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        
-        <button
-          type="submit"
-          className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
-        >
-          Sign Up
-        </button>
-        <p className="text-sm font-normal text-gray-500 ">
-          Already have an account?{" "}
-          <Link
-            to="/signin"
-            className="font-medium text-blue-600 hover:underline"
-          >
-            Sign In
-          </Link>
-        </p>
+
+        <div className="flex flex-col justify-center">
+          <SubmitButton handleClick={handleSubmit}>Sign Up</SubmitButton>
+
+          <p className="text-sm py-2.5 font-normal text-gray-500 ">
+            Already have an account?{" "}
+            <Link
+              to="/signin"
+              className="font-medium text-blue-600 hover:underline"
+            >
+              Sign In
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );

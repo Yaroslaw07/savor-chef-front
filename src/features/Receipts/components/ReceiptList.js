@@ -1,4 +1,4 @@
-import ReceiptItem from "./ReceiptItem"
+import ReceiptCard from "./ReceiptCard";
 
 function ReceiptList({ receipts, showRecipe }) {
   console.log(typeof showRecipe);
@@ -6,11 +6,11 @@ function ReceiptList({ receipts, showRecipe }) {
   return (
     <ul className="flex flex-row flex-wrap overflow-auto h-full flex-grow  pl-6 pr-2  gap-5">
       {receipts.map((receipt) => (
-        <ReceiptItem
+        <ReceiptCard
           key={receipt.id}
           receipt={receipt}
           clickHandle={showRecipe}
-        ></ReceiptItem>
+        ></ReceiptCard>
       ))}
     </ul>
   );

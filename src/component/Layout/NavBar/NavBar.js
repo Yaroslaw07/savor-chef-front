@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ActivePath from "./ActivePath";
 import InactivePath from "./InactivePath";
 import { useContext } from "react";

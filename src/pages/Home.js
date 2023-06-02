@@ -1,5 +1,4 @@
-import { useContext, useState, useEffect } from "react";
-import AuthContext from "../features/Auth/contexts/AuthContext";
+import {useState, useEffect } from "react";
 import ReceiptList from "../features/Receipts/components/ReceiptList";
 import recipeDataService from "../features/Receipts/services/RecipesService";
 import FullReceipt from "../features/Receipts/components/ReceiptFull";
@@ -15,7 +14,7 @@ export class SideWindowState {
   }
 
   toString() {
-    return `State:${this.state}`;
+    return `${this.state}`;
   }
 }
 
@@ -26,7 +25,6 @@ function Home() {
   const [currRecipe,setCurrReceipt] = useState(null);
 
   useEffect(() => {
-    console.log("useEffect")
     recipeDataService
       .getAll()
       .then((response) => {

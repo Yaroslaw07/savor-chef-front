@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ReceiptItem({ receipt, clickHandle }) {
+function ReceiptCard({ receipt, clickHandle }) {
   const [isFocused, setFocus] = useState(false);
 
   return (
@@ -31,4 +31,4 @@ function ReceiptItem({ receipt, clickHandle }) {
   );
 }
 
-export default ReceiptItem;
+export default ReceiptCard;
