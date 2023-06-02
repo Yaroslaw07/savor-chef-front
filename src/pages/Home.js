@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../features/Auth/contexts/AuthContext";
 import ReceiptList from "../features/Receipts/components/ReceiptList";
-import recipeDataService from "../features/Receipts/services/recipes.service";
+import recipeDataService from "../features/Receipts/services/RecipesService";
 import FullReceipt from "../features/Receipts/components/ReceiptFull";
 import NewReceiptForm from "../features/Receipts/components/NewReceiptForm";
 
@@ -24,9 +24,9 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [currSideBar, setSideBar] = useState(SideWindowState.Hidden);
   const [currRecipe,setCurrReceipt] = useState(null);
-  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
+    console.log("useEffect")
     recipeDataService
       .getAll()
       .then((response) => {
@@ -35,16 +35,20 @@ function Home() {
       .finally(setLoading(false));
   }, []);
 
-  const showRecipe = (receiptId) => {
+  const showFullRecipe = (receiptId) => {
     recipeDataService.get(receiptId).then((response) => {
       setCurrReceipt(response.data);
       setSideBar(SideWindowState.Receipt);
     });
   };
 
-  const addRecipe = () => {
+  async function showAddRecipe ()  {
     setCurrReceipt(null)
     setSideBar(SideWindowState.AddReceipt)
+  }
+
+  const AddRecipe = (receipt) => {
+    recipeDataService.create(receipt)
   }
 
   const closeSideWindow = () => {
@@ -64,11 +68,12 @@ function Home() {
     case SideWindowState.Hidden:
       return (
         <div className="pt-4 pb-4">
-          <ReceiptList receipts={receipts} showRecipe={showRecipe} />
+          <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
 
-          <button 
-          onClick={addRecipe}
-          className="fixed right-5 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+          <button
+            onClick={showAddRecipe}
+            className="fixed right-5 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
             +
           </button>
         </div>
@@ -78,7 +83,7 @@ function Home() {
       return (
         <div className="flex pt-4 pb-4">
           <div className="hidden sm:w-1/2 sm:block">
-            <ReceiptList receipts={receipts} showRecipe={showRecipe} />
+            <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
           </div>
           <div className="w-full sm:w-1/2">
             <FullReceipt receipt={currRecipe}></FullReceipt>
@@ -96,17 +101,11 @@ function Home() {
       return (
         <div className="flex pt-4 pb-4">
           <div className="hidden sm:w-1/2 sm:block">
-            <ReceiptList receipts={receipts} showRecipe={showRecipe} />
+            <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
           </div>
           <div className="w-full sm:w-1/2">
-            <NewReceiptForm></NewReceiptForm>
+            <NewReceiptForm onSubmit={AddRecipe} onCancel={closeSideWindow}></NewReceiptForm>
           </div>
-          <button
-            onClick={closeSideWindow}
-            className="fixed right-5 bottom-4 w-14 rounded-lg text-white text-3xl bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          >
-            x
-          </button>
         </div>
       );
 
@@ -129,7 +128,17 @@ export default Home;
 
 
 
-
+const recipe = {
+  name: "Spaghetti Bolognese",
+  ingredients: "string",
+  recipeDescription: "Classic Italian dish with pasta and meat sauce.",
+  preparationInstruction:
+    "1. Cook pasta according to package instructions. 2. In a separate pan, heat olive oil and sauté onion and garlic. 3. Add ground beef and cook until browned. 4. Stir in tomato sauce and season with salt and pepper. 5. Simmer for 20 minutes. 6. Serve sauce over cooked pasta.",
+  preparationTime: "30 minutes",
+  difficulty: "Medium",
+  dishCategory: "Main Dish",
+  associatedProductIds: []
+};
 
 
 const recipes = [

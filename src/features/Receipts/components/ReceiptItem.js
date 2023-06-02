@@ -8,7 +8,7 @@ function ReceiptItem({ receipt, clickHandle }) {
       <div
         className={` ${
           isFocused ? "bg-gray-100" : "bg-white"
-        } w-52 h-36 border-b-4 border-blue-300 rounded-lg shadow dark: dark:bg-gray-800 dark:border-gray-700`}
+        } w-52 h-36 border-b-4 border-blue-300 rounded-lg shadow`}
         onMouseEnter={() => setFocus(true)}
         onMouseLeave={() => setFocus(false)}
       >
@@ -17,12 +17,12 @@ function ReceiptItem({ receipt, clickHandle }) {
             onClick={() => clickHandle(receipt.id)}
             className={`${
               isFocused ? "bg-blue-800" : "bg-blue-700"
-            } mb-1 h-20 p-4 rounded-t-lg text-white   hover:bg-blue-800 text-xl font-bold dark:text-white`}
+            } mb-1 h-20 p-4 rounded-t-lg text-white   hover:bg-blue-800 text-xl font-bold `}
           >
             {receipt.name}
           </h3>
         </div>
-        <div className="px-3 font-normal text-gray-700 dark:text-gray-400">
+        <div className="px-3 font-normal text-gray-700 ">
           <p>Difficulty: {receipt.difficulty} </p>
           <p>⌛: {receipt.preparationTime} </p>
         </div>

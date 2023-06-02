@@ -2,8 +2,9 @@
 
 function FullReceipt({ receipt }) {
 
-    console.log(receipt.name)
-  return <div>{receipt.name}</div>;
+  return <section className="bg-gray-50 bg-gradient-to-b from-white to-blue-300"> 
+      {receipt.name}
+  </section>;
 }
 
 export default FullReceipt
