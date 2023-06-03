@@ -14,7 +14,7 @@ function NavBar() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <nav className="sticky bg-white  w-full z-20 top-0 left-0 border-b-4 rounded-b-lg border-blue-300  ">
+    <nav className="sticky bg-white h-18  w-full z-20 top-0 left-0 border-b-4 rounded-b-lg border-blue-300  ">
       <div className="flex flex-wrap flex-col sm:flex-row  sm:gap-0 items-center justify-between p-4 pl-6">
         <Link
           to="/"

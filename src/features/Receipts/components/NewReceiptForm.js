@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SubmitButton from "../../../component/ui/buttons/SubmitButton";
 import CancelButton from "../../../component/ui/buttons/CancelButton";
+import Card from "./ui/Card";
 
 function NewReceiptForm({ onSubmit, onCancel }) {
   const [receipt, setReceipt] = useState({
@@ -25,16 +26,14 @@ function NewReceiptForm({ onSubmit, onCancel }) {
   }
 
   function FormSubmit() {
-    
     receipt.preparationTime = receipt.Hours + ":" + receipt.Minutes
-    
     onSubmit(receipt)
   }
 
 
   return (
-    <section className="border-blue-300 flex flex-col  justify-center px-2">
-      <div className="bg-white border-2 border-gray-100 rounded-lg flex flex-col  justify-center ">
+    <section className="absolute inset-0 justify-center px-2">
+      <Card>
         <form
           className="space-y-4 px-2 md:space-y-6 py-6"
           onSubmit={FormSubmit}
@@ -144,7 +143,7 @@ function NewReceiptForm({ onSubmit, onCancel }) {
             <SubmitButton clickHandle={FormSubmit}>Create</SubmitButton>
           </div>
         </form>
-      </div>
+      </Card>
     </section>
   );
 }
