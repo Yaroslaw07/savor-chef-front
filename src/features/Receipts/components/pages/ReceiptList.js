@@ -1,4 +1,4 @@
-import ReceiptCard from "./ReceiptCard";
+import ReceiptCard from "../ui/ReceiptCard";
 
 function ReceiptList({ receipts, showRecipe }) {
   console.log(typeof showRecipe);

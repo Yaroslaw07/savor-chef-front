@@ -1,8 +1,8 @@
 import {useState, useEffect } from "react";
-import ReceiptList from "../features/Receipts/components/ReceiptList";
+import ReceiptList from "../features/Receipts/components/pages/ReceiptList";
 import recipeDataService from "../features/Receipts/services/RecipesService";
-import FullReceipt from "../features/Receipts/components/ReceiptFull";
-import NewReceiptForm from "../features/Receipts/components/NewReceiptForm";
+import FullReceipt from "../features/Receipts/components/pages/ReceiptFull";
+import NewReceiptForm from "../features/Receipts/components/pages/NewReceiptForm";
 
 export class SideWindowState {
   static Hidden = new SideWindowState("Hidden");

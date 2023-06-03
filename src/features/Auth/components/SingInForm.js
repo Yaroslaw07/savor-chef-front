@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
-import SubmitButton from "../../../component/ui/buttons/SubmitButton";
+import SubmitButton from "../../../components/ui/buttons/SubmitButton";
 
 
 function SignInForm({setToken}) {

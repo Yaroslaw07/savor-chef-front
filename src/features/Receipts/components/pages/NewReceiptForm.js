@@ -1,13 +1,13 @@
 import { useState } from "react";
-import SubmitButton from "../../../component/ui/buttons/SubmitButton";
-import CancelButton from "../../../component/ui/buttons/CancelButton";
-import Card from "./ui/Card";
+import SubmitButton from "../../../../components/ui/buttons/SubmitButton";
+import CancelButton from "../../../../components/ui/buttons/CancelButton";
+import Card from "../ui/WindowCard";
 
 function NewReceiptForm({ onSubmit, onCancel }) {
   const [receipt, setReceipt] = useState({
     name: "New Receipt",
     recipeDescription: "",
-    preparationInstruction: "",
+    preparationInstructions: "",
     Hours: Number,
     Minutes: Number,
     preparationTime: String,
