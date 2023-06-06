@@ -2,10 +2,8 @@ import {useState, useEffect } from "react";
 import ReceiptList from "../features/Receipts/components/pages/ReceiptList";
 import recipeDataService from "../features/Receipts/services/RecipesService";
 import FullReceipt from "../features/Receipts/components/pages/ReceiptFull";
-import NewReceiptForm from "../features/Receipts/components/pages/NewReceiptForm";
-
+import EditReceiptForm from "../features/Receipts/components/pages/EditReceiptForm";
 export class SideWindowState {
-  static Hidden = new SideWindowState("Hidden");
   static Receipt = new SideWindowState("Receipt");
   static AddReceipt = new SideWindowState("AddReceipt");
 
@@ -47,6 +45,12 @@ function Home() {
 
   const AddRecipe = (receipt) => {
     recipeDataService.create(receipt)
+      .then(response => {
+        setCurrReceipt(response.data)
+        setSideBar(SideWindowState.Receipt);
+      })
+      .catch(error => console.log(error)) 
+
   }
 
   const closeSideWindow = () => {
@@ -66,8 +70,10 @@ function Home() {
 
     case null:
       return (
-        <div className="relative pt-4 pb-4 h-full">
-          <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
+        <div className="relative overflow-auto pt-4 pb-4 h-full">
+          <div className="relative overflow-auto  no-scrollbar">
+            <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
+          </div>
 
           <button
             onClick={showAddRecipe}
@@ -81,11 +87,11 @@ function Home() {
     case SideWindowState.Receipt:
       return (
         <div className="relative overflow-auto flex pt-4 pb-4 h-full">
-          <div className="hidden sm:w-1/2 sm:block h-full">
+          <div className="relative overflow-auto  no-scrollbar hidden sm:w-1/2 sm:block h-full">
             <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
           </div>
-          <div className="w-full sm:w-1/2 h-full">
-            <FullReceipt receipt={currRecipe}></FullReceipt>
+          <div className="relative overflow-auto w-full sm:w-1/2 h-full">
+            <FullReceipt receipt={currRecipe} handleClose={closeSideWindow}></FullReceipt>
           </div>
         </div>
       );
@@ -93,14 +99,14 @@ function Home() {
     case SideWindowState.AddReceipt:
       return (
         <div className="relative overflow-auto flex pt-4 pb-2  h-full">
-          <div className="relative overflow-auto hidden pt-4 no-scrollbar sm:w-1/2 sm:block h-full pb-2">
+          <div className="relative overflow-auto hidden no-scrollbar sm:w-1/2 sm:block h-full pb-2">
             <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
           </div>
-          <div className="relative w-full sm:w-1/2 h-full">
-            <NewReceiptForm
-              onSubmit={AddRecipe}
+          <div className="relative overflow-auto w-full sm:w-1/2 h-full">
+            <EditReceiptForm
+              handleSubmit={AddRecipe}
               onCancel={closeSideWindow}
-            ></NewReceiptForm>
+            ></EditReceiptForm>
           </div>
         </div>
       );

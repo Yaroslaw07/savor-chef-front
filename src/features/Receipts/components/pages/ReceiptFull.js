@@ -2,15 +2,18 @@ import Card from "../ui/WindowCard";
 import ProductsList from "../../../Products/components/ProductsList";
 
 
-function FullReceipt({ receipt }) {
+function FullReceipt({ receipt,handleClose }) {
 
   return (
     <Card>
       <h3 className="bg-blue-700 p-4 rounded-t-lg border-b-4 border-b-blue-300 text-white text-3xl font-bold">
-        {receipt.name}
+        <div className="flex flex-row justify-between">
+          <p>{receipt.name}</p>
+          <button onClick={handleClose}>✕</button>
+        </div>
       </h3>
 
-      <div className="px-4 font-medium text-lg text-gray-700 italic">
+      <div className="px-5 font-medium text-lg text-gray-700 italic">
         {receipt.dishCategory} • {receipt.recipeDescription}
       </div>
 

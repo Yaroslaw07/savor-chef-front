@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
-import MainLayout from "./component/Layout/Layout";
+import MainLayout from "./components/Layout/Layout";
 import SignInForm from "./features/Auth/components/SingInForm";
 import SignUpForm from "./features/Auth/components/SignUpForm";
 import { AuthContextProvider } from "./features/Auth/contexts/AuthContext";
@@ -14,7 +14,7 @@ function App(){
     <BrowserRouter>
       <AuthContextProvider>
         <Routes>
-          <Route element = {<AuthLayout/>}>
+          <Route element={<AuthLayout />}>
             <Route path="/signin" element={<SignInForm />}></Route>
             <Route path="/signup" element={<SignUpForm />}></Route>
           </Route>
