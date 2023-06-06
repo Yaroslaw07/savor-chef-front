@@ -32,7 +32,6 @@ function NewReceiptForm({ oldReceipt, handleSubmit, handleClose }) {
   function FormSubmit() {
 
     receipt.preparationTime = receipt.Hours + ":" + receipt.Minutes;
-    console.log(receipt)
     handleSubmit(receipt);
   }
 
@@ -161,7 +160,7 @@ function NewReceiptForm({ oldReceipt, handleSubmit, handleClose }) {
             />
           </div>
 
-          <SubmitButton handleClick={FormSubmit}>Create</SubmitButton>
+          <SubmitButton handleClick={FormSubmit}>Submit</SubmitButton>
         </div>
       </form>
     </Card>

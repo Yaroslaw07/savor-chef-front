@@ -6,6 +6,7 @@ import EditReceiptForm from "../features/Receipts/components/pages/EditReceiptFo
 export class SideWindowState {
   static Receipt = new SideWindowState("Receipt");
   static AddReceipt = new SideWindowState("AddReceipt");
+  static EditReceipt = new SideWindowState("EditReceipt")
 
   constructor(state) {
     this.state = state;
@@ -38,9 +39,17 @@ function Home() {
     });
   };
 
-  async function showAddRecipe ()  {
-    setCurrReceipt(null)
+  const showAddRecipe = () =>  {
     setSideBar(SideWindowState.AddReceipt)
+  }
+
+  const showEditRecipe = () => {
+    setSideBar(SideWindowState.EditReceipt);
+  }
+
+  const EditRecipe = (receipt) => {
+    console.log("edited",receipt)
+    setSideBar(SideWindowState.Receipt);
   }
 
   const AddRecipe = (receipt) => {
@@ -67,7 +76,6 @@ function Home() {
   }
 
   switch (currSideBar) {
-
     case null:
       return (
         <div className="relative overflow-auto pt-4 pb-4 h-full">
@@ -88,10 +96,18 @@ function Home() {
       return (
         <div className="relative overflow-auto flex pt-4 pb-4 h-full">
           <div className="relative overflow-auto  no-scrollbar hidden sm:w-1/2 sm:block h-full">
-            <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
+            <ReceiptList
+              receipts={receipts}
+              handleEdit={showEditRecipe}
+              showRecipe={showFullRecipe}
+            />
           </div>
           <div className="relative overflow-auto w-full sm:w-1/2 h-full">
-            <FullReceipt receipt={currRecipe} handleClose={closeSideWindow}></FullReceipt>
+            <FullReceipt
+              receipt={currRecipe}
+              handleClose={closeSideWindow}
+              handleEdit={showEditRecipe}
+            ></FullReceipt>
           </div>
         </div>
       );
@@ -105,6 +121,22 @@ function Home() {
           <div className="relative overflow-auto w-full sm:w-1/2 h-full">
             <EditReceiptForm
               handleSubmit={AddRecipe}
+              onCancel={closeSideWindow}
+            ></EditReceiptForm>
+          </div>
+        </div>
+      );
+
+    case SideWindowState.EditReceipt:
+      return (
+        <div className="relative overflow-auto flex pt-4 pb-2  h-full">
+          <div className="relative overflow-auto hidden no-scrollbar sm:w-1/2 sm:block h-full pb-2">
+            <ReceiptList receipts={receipts} showRecipe={showFullRecipe} />
+          </div>
+          <div className="relative overflow-auto w-full sm:w-1/2 h-full">
+            <EditReceiptForm
+              oldReceipt={currRecipe}
+              handleSubmit={EditRecipe}
               onCancel={closeSideWindow}
             ></EditReceiptForm>
           </div>
