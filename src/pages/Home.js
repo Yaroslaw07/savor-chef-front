@@ -56,6 +56,7 @@ function Home() {
     console.log(id)
     recipeDataService.delete(id)
     .then(_ => {
+      setReceipts(receipts.filter(receipt => {return receipt.id !== id}))
       setSideBar(null)
       setCurrReceipt(null)
     })
@@ -65,11 +66,11 @@ function Home() {
   const AddRecipe = (receipt) => {
     recipeDataService.create(receipt)
       .then(response => {
+        //setReceipts(receipts.push(response.data));
         setCurrReceipt(response.data)
         setSideBar(SideWindowState.Receipt);
       })
       .catch(error => console.log(error)) 
-
   }
 
   const closeSideWindow = () => {

@@ -12,7 +12,7 @@ class RecipeDataService {
     }
 
     async delete(id) {
-        return await jwtInterceptor.delete("/api/Recipe/Delete", id);
+        return await jwtInterceptor.delete(`/api/Recipe/Delete?id=${id}`);
     }
 
     async getAll(user) {      
