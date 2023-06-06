@@ -66,9 +66,11 @@ function Home() {
   const AddRecipe = (receipt) => {
     recipeDataService.create(receipt)
       .then(response => {
-        //setReceipts(receipts.push(response.data));
+        //const temp = receipts.push(response.data);
+        //setReceipts(Object.keys(temp).map((key) => [key, temp[key]]))
+        console.log(typeof receipt)
         setCurrReceipt(response.data)
-        setSideBar(SideWindowState.Receipt);
+        setSideBar(SideWindowState.Receipt)
       })
       .catch(error => console.log(error)) 
   }
