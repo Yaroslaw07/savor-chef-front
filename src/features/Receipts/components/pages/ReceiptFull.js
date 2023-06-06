@@ -2,7 +2,11 @@ import Card from "../ui/WindowCard";
 import ProductsList from "../../../Products/components/ProductsList";
 
 
-function FullReceipt({ receipt,handleClose,handleEdit }) {
+function FullReceipt({ receipt,handleClose,handleEdit,handleDelete }) {
+
+  const toDelete = () => {
+    handleDelete(receipt.id);
+  }
 
   return (
     <Card>
@@ -11,6 +15,7 @@ function FullReceipt({ receipt,handleClose,handleEdit }) {
           <p>{receipt.name}</p>
           <div className="flex flex-row gap-4">
             <button onClick={handleEdit}>📝</button>
+            <button onClick={toDelete}>🗑️</button>
             <button onClick={handleClose}>✕</button>
           </div>
         </div>

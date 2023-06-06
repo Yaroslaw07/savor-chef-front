@@ -14,27 +14,34 @@ jwtInterceptor.interceptors.response.use(
     } ,
 
     async (error) => {
+
         
         if (error.response.status === 401) {
            
             const data = JSON.parse(localStorage.getItem('tokens'));
 
             api
-              .post("/refresh", data.refreshToken, {
-                headers: {
-                  Authorization: `Bearer ${data.accessToken}`,
-                },
-              })
+              .post(
+                "/refresh",
+                { refreshToken: data.refreshToken },
+                {
+                  headers: {
+                    Authorization: `Bearer ${data.accessToken}`,
+                  },
+                }
+              )
               .then((response) => {
+                console.log(response)
                 localStorage.setItem("tokens", JSON.stringify(response.data));
 
                 error.config.headers[
                   "Authorization"
                 ] = `Bearer ${response.data.accessToken}`;
-                return api(error.config);
+                return api.request(error.config);
               })
               .catch((error) => {
-                console.log(error.data.response)
+                console.log(error.data.response);
+                return Promise.reject(error);
               });
 
         } else {

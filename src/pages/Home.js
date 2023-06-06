@@ -51,6 +51,16 @@ function Home() {
     console.log("edited",receipt)
     setSideBar(SideWindowState.Receipt);
   }
+  
+  const DeleteRecipe = (id) => {
+    console.log(id)
+    recipeDataService.delete(id)
+    .then(_ => {
+      setSideBar(null)
+      setCurrReceipt(null)
+    })
+    .catch(error => console.log(error)) 
+  }
 
   const AddRecipe = (receipt) => {
     recipeDataService.create(receipt)
@@ -107,6 +117,7 @@ function Home() {
               receipt={currRecipe}
               handleClose={closeSideWindow}
               handleEdit={showEditRecipe}
+              handleDelete={DeleteRecipe}
             ></FullReceipt>
           </div>
         </div>
@@ -147,6 +158,5 @@ function Home() {
       return <p>Error</p>;
   }
 }
-
 
 export default Home;
